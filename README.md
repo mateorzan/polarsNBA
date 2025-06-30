@@ -1,25 +1,41 @@
-# polarsNBA
+# Proyecto polarsNBA
 
-## Preparacion de entorno
+En este proyecto se centra en la implementacion de nuevas herramientas como uv para crear un entorno local simple y reproducible y polars. El objetivo es explicar su funcionamiento y rendimiento, aqui se explica como se configuraria y funcionarian estas herramientas en un entorno local
 
-Instalacion de la herramienta uv
+## Preparacion de entorno (UV)
 
-´´´ python 
-curl -Ls https://astral.sh/uv/install.sh | bash
+Instalacion de la herramienta uv, para mas informacion mirar en (https://docs.astral.sh/uv/#installation)
+
 ´´´
+curl -Ls https://astral.sh/uv/install.sh | bash
+source $HOME/.local/bin/env
 
-export PATH="$HOME/.local/bin:$PATH"
+´´´python
 
-source ~/.bashrc   # o source ~/.zshrc si usas zsh
-
-
-Verifica si se instalo
+Verificamos si esta Instalado
 
 ´´´python
 uv --version
 ´´´
 
+Creamos el entorno vitual uv, nos posicionamos en la carpeta que deseamos crear el entorno y hacemos un uv init, luego ejecutamos el script main que nos creara el entorno. Este paso es solo si quieres crear un entorno nuevo si estas clonando este repositoria te lo puedes saltar.
 
+´´´python
+uv init
+uv run main.py
+´´´
+Para añadir dependencias se usa el comando uv add con este comando instalamos y añadimos el paquete a nuestro proyecto.
+
+´´´python
+uv add paquete1 paquete2
+´´´
+
+Si estas clonando este repositorio simplemente con el comando uv sync ya que se instalaran todos los paquetes que yo añadi a este proyecto. Instalar dependencias: 
+
+´´´python
+uv sync
+source .venv/bin/activate
+´´´
 
 COSAS QUE HACER 
 
