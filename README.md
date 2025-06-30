@@ -1,48 +1,251 @@
-# Proyecto polarsNBA
+# 🏀 polarsNBA
 
-En este proyecto se centra en la implementacion de nuevas herramientas como uv para crear un entorno local simple y reproducible y polars. El objetivo es explicar su funcionamiento y rendimiento, aqui se explica como se configuraria y funcionarian estas herramientas en un entorno local
+Un proyecto de análisis de datos NBA centrado en herramientas modernas de Python: **uv** para gestión de entornos y **Polars** para procesamiento de datos de alto rendimiento.
 
-## Preparacion de entorno (UV)
+## 🎯 Objetivos
 
-Instalacion de la herramienta uv, para mas informacion mirar en (https://docs.astral.sh/uv/#installation)
+- Implementar **uv** como gestor de paquetes y entornos virtuales
+- Utilizar **Polars** para operaciones ETL eficientes
+- Crear un pipeline de datos actualizable para estadísticas NBA
+- Establecer las bases para una futura base de datos
 
-´´´
-curl -Ls https://astral.sh/uv/install.sh | bash
-source $HOME/.local/bin/env
+## 🚀 Configuración del Entorno
 
-´´´python
+### Instalación de uv
 
-Verificamos si esta Instalado
+Instala uv siguiendo las [instrucciones oficiales](https://docs.astral.sh/uv/#installation):
 
-´´´python
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+source $HOME/.cargo/env
+```
+
+Verifica la instalación:
+
+```bash
 uv --version
-´´´
+```
 
-Creamos el entorno vitual uv, nos posicionamos en la carpeta que deseamos crear el entorno y hacemos un uv init, luego ejecutamos el script main que nos creara el entorno. Este paso es solo si quieres crear un entorno nuevo si estas clonando este repositoria te lo puedes saltar.
+### Configuración del Proyecto
 
-´´´python
+#### Opción 1: Crear un nuevo proyecto
+
+```bash
+# Crear directorio del proyecto
+mkdir polarsNBA
+cd polarsNBA
+
+# Inicializar proyecto con uv
 uv init
+
+# Ejecutar el script principal (crea el entorno automáticamente)
 uv run main.py
-´´´
-Para añadir dependencias se usa el comando uv add con este comando instalamos y añadimos el paquete a nuestro proyecto.
+```
 
-´´´python
-uv add paquete1 paquete2
-´´´
+#### Opción 2: Clonar este repositorio
 
-Si estas clonando este repositorio simplemente con el comando uv sync ya que se instalaran todos los paquetes que yo añadi a este proyecto. Instalar dependencias: 
+```bash
+# Clonar el repositorio
+git clone <url-del-repositorio>
+cd polarsNBA
 
-´´´python
+# Sincronizar dependencias
 uv sync
-source .venv/bin/activate
-´´´
 
-COSAS QUE HACER 
+# Activar el entorno virtual
+uv run main.py
+```
 
-Implementar uv para instalar las diferentes dependencias del proyecto.
+### Gestión de Dependencias
 
-Usar polars para el proceso de etl.
+Añadir nuevas dependencias:
 
-Crear un script que actualice el csv incial con datos nuevos para asi tener datos actuales.
+```bash
+uv add polars pandas requests beautifulsoup4
+```
 
-En un futuro crear una base de datos que almacene los datos y gestionarlos desde ahi.
+Ver dependencias instaladas:
+
+```bash
+uv pip list
+```
+
+Actualizar dependencias:
+
+```bash
+uv sync --upgrade
+```
+
+## 📦 Dependencias Principales
+
+- **polars**: Procesamiento de datos de alto rendimiento
+- **requests**: Peticiones HTTP para obtener datos
+- **beautifulsoup4**: Web scraping (si es necesario)
+- **pytest**: Testing
+- **black**: Formateo de código
+- **ruff**: Linting
+
+## 🏗️ Estructura del Proyecto
+
+```
+polarsNBA/
+├── README.md
+├── pyproject.toml
+├── uv.lock
+├── src/
+│   ├── __init__.py
+│   ├── data/
+│   │   ├── __init__.py
+│   │   ├── extractors.py    # Extracción de datos
+│   │   ├── transformers.py  # Transformaciones con Polars
+│   │   └── loaders.py       # Carga de datos
+│   ├── utils/
+│   │   ├── __init__.py
+│   │   └── helpers.py
+│   └── main.py
+├── data/
+│   ├── raw/                 # Datos en bruto
+│   ├── processed/           # Datos procesados
+│   └── external/            # Datos externos
+├── notebooks/               # Jupyter notebooks para análisis
+├── tests/
+└── scripts/
+    └── update_data.py       # Script de actualización
+```
+
+## 🔄 Pipeline de Datos
+
+### 1. Extracción (Extract)
+```python
+import polars as pl
+import requests
+
+def extract_nba_data():
+    # Implementar extracción de APIs NBA
+    pass
+```
+
+### 2. Transformación (Transform)
+```python
+def transform_data(df: pl.DataFrame) -> pl.DataFrame:
+    return (
+        df
+        .with_columns([
+            pl.col("date").str.to_datetime(),
+            pl.col("points").cast(pl.Int32)
+        ])
+        .filter(pl.col("season") == "2024-25")
+        .group_by("player")
+        .agg([
+            pl.col("points").mean().alias("avg_points"),
+            pl.col("rebounds").sum().alias("total_rebounds")
+        ])
+    )
+```
+
+### 3. Carga (Load)
+```python
+def load_data(df: pl.DataFrame, output_path: str):
+    df.write_parquet(output_path)
+```
+
+## 🗂️ Uso Básico
+
+### Ejecutar el pipeline completo:
+
+```bash
+uv run src/main.py
+```
+
+### Actualizar datos:
+
+```bash
+uv run scripts/update_data.py
+```
+
+### Ejecutar tests:
+
+```bash
+uv run pytest tests/
+```
+
+## 📊 Características de Polars
+
+### Ventajas sobre Pandas:
+- **Velocidad**: Hasta 10x más rápido en operaciones complejas
+- **Memoria**: Uso eficiente de memoria con lazy evaluation
+- **Sintaxis**: API expresiva y consistente
+- **Tipos**: Sistema de tipos robusto
+
+### Ejemplo de uso:
+
+```python
+import polars as pl
+
+# Lectura lazy (no carga en memoria inmediatamente)
+df = (
+    pl.scan_csv("data/nba_stats.csv")
+    .filter(pl.col("season") == "2024-25")
+    .group_by("team")
+    .agg([
+        pl.col("points").mean().alias("avg_points"),
+        pl.col("wins").sum().alias("total_wins")
+    ])
+    .sort("avg_points", descending=True)
+    .collect()  # Ejecuta todas las operaciones
+)
+```
+
+## 🎯 Roadmap
+
+### ✅ Completado
+- [x] Configuración de uv
+- [x] Estructura básica del proyecto
+
+### 🔄 En Progreso
+- [ ] Implementación del pipeline ETL con Polars
+- [ ] Script de actualización automática de datos
+- [ ] Tests unitarios
+
+### 📋 Pendiente
+- [ ] Integración con APIs NBA oficiales
+- [ ] Dashboard interactivo
+- [ ] Base de datos PostgreSQL/DuckDB
+- [ ] CI/CD con GitHub Actions
+- [ ] Documentación con Sphinx
+
+## 🤝 Contribuir
+
+1. Fork el repositorio
+2. Crea una rama feature (`git checkout -b feature/nueva-funcionalidad`)
+3. Commit tus cambios (`git commit -am 'Añadir nueva funcionalidad'`)
+4. Push a la rama (`git push origin feature/nueva-funcionalidad`)
+5. Abre un Pull Request
+
+## 📝 Comandos Útiles
+
+```bash
+# Desarrollo
+uv run black src/                    # Formatear código
+uv run ruff check src/               # Linting
+uv run pytest tests/ -v             # Tests con verbosidad
+
+# Gestión del entorno
+uv venv --python 3.11               # Crear entorno con Python específico
+uv pip install -e .                 # Instalar en modo desarrollo
+uv export --format requirements-txt # Exportar requirements.txt
+```
+
+## 📄 Licencia
+
+Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
+
+## 📞 Contacto
+
+- **Autor**: Tu Nombre
+- **Email**: tu.email@ejemplo.com
+- **GitHub**: [@tu-usuario](https://github.com/tu-usuario)
+
+---
+
+⭐ Si este proyecto te resulta útil, ¡dale una estrella en GitHub!
