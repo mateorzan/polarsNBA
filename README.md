@@ -82,8 +82,6 @@ uv sync --upgrade
 - **requests**: Peticiones HTTP para obtener datos
 - **beautifulsoup4**: Web scraping (si es necesario)
 - **pytest**: Testing
-- **black**: Formateo de código
-- **ruff**: Linting
 
 ## 🏗️ Estructura del Proyecto
 
@@ -92,18 +90,9 @@ polarsNBA/
 ├── README.md
 ├── pyproject.toml
 ├── uv.lock
-├── src/
-│   ├── __init__.py
-│   ├── data/
-│   │   ├── __init__.py
-│   │   ├── extractors.py    # Extracción de datos
-│   │   ├── transformers.py  # Transformaciones con Polars
-│   │   └── loaders.py       # Carga de datos
-│   ├── utils/
-│   │   ├── __init__.py
-│   │   └── helpers.py
-│   └── main.py
-├── data/
+├── main.py
+├── .python-version
+├── archive/
 │   ├── raw/                 # Datos en bruto
 │   ├── processed/           # Datos procesados
 │   └── external/            # Datos externos
@@ -214,20 +203,11 @@ df = (
 - [ ] CI/CD con GitHub Actions
 - [ ] Documentación con Sphinx
 
-## 🤝 Contribuir
-
-1. Fork el repositorio
-2. Crea una rama feature (`git checkout -b feature/nueva-funcionalidad`)
-3. Commit tus cambios (`git commit -am 'Añadir nueva funcionalidad'`)
-4. Push a la rama (`git push origin feature/nueva-funcionalidad`)
-5. Abre un Pull Request
 
 ## 📝 Comandos Útiles
 
 ```bash
 # Desarrollo
-uv run black src/                    # Formatear código
-uv run ruff check src/               # Linting
 uv run pytest tests/ -v             # Tests con verbosidad
 
 # Gestión del entorno
@@ -236,15 +216,11 @@ uv pip install -e .                 # Instalar en modo desarrollo
 uv export --format requirements-txt # Exportar requirements.txt
 ```
 
-## 📄 Licencia
-
-Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
-
 ## 📞 Contacto
 
-- **Autor**: Tu Nombre
-- **Email**: tu.email@ejemplo.com
-- **GitHub**: [@tu-usuario](https://github.com/tu-usuario)
+- **Autor**: Mateo Iglesias
+- **Email**: mateorzan@gmail.com
+- **GitHub**: [@mateorzan](https://github.com/tu-usuario)
 
 ---
 
