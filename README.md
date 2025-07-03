@@ -6,7 +6,6 @@ Un proyecto de análisis de datos NBA centrado en herramientas modernas de Pytho
 
 - Implementar **uv** como gestor de paquetes y entornos virtuales
 - Utilizar **Polars** para operaciones ETL eficientes
-- Crear un pipeline de datos actualizable para estadísticas NBA
 - Establecer las bases para una futura base de datos
 
 ## 🚀 Configuración del Entorno
@@ -79,9 +78,7 @@ uv sync --upgrade
 ## 📦 Dependencias Principales
 
 - **polars**: Procesamiento de datos de alto rendimiento
-- **requests**: Peticiones HTTP para obtener datos
-- **beautifulsoup4**: Web scraping (si es necesario)
-- **pytest**: Testing
+- **ipykernel**: Gestor para poder ejecutar los notebooks
 
 ## 🏗️ Estructura del Proyecto
 
@@ -94,68 +91,10 @@ polarsNBA/
 ├── .python-version
 ├── archive/
 │   ├── raw/                 # Datos en bruto
-│   ├── processed/           # Datos procesados
-│   └── external/            # Datos externos
+│   └── processed/           # Datos procesados
 ├── notebooks/               # Jupyter notebooks para análisis
-├── tests/
 └── scripts/
-    └── update_data.py       # Script de actualización
-```
-
-## 🔄 Pipeline de Datos
-
-### 1. Extracción (Extract)
-```python
-import polars as pl
-import requests
-
-def extract_nba_data():
-    # Implementar extracción de APIs NBA
-    pass
-```
-
-### 2. Transformación (Transform)
-```python
-def transform_data(df: pl.DataFrame) -> pl.DataFrame:
-    return (
-        df
-        .with_columns([
-            pl.col("date").str.to_datetime(),
-            pl.col("points").cast(pl.Int32)
-        ])
-        .filter(pl.col("season") == "2024-25")
-        .group_by("player")
-        .agg([
-            pl.col("points").mean().alias("avg_points"),
-            pl.col("rebounds").sum().alias("total_rebounds")
-        ])
-    )
-```
-
-### 3. Carga (Load)
-```python
-def load_data(df: pl.DataFrame, output_path: str):
-    df.write_parquet(output_path)
-```
-
-## 🗂️ Uso Básico
-
-### Ejecutar el pipeline completo:
-
-```bash
-uv run src/main.py
-```
-
-### Actualizar datos:
-
-```bash
-uv run scripts/update_data.py
-```
-
-### Ejecutar tests:
-
-```bash
-uv run pytest tests/
+    └── 
 ```
 
 ## 📊 Características de Polars
@@ -192,24 +131,19 @@ df = (
 - [x] Estructura básica del proyecto
 
 ### 🔄 En Progreso
-- [ ] Implementación del pipeline ETL con Polars
-- [ ] Script de actualización automática de datos
-- [ ] Tests unitarios
+- [ ] Implementación del ETL con Polars
+- [ ] Modelado de datos
+- [ ] Cuadro de mandos en PowerBI
 
 ### 📋 Pendiente
 - [ ] Integración con APIs NBA oficiales
 - [ ] Dashboard interactivo
-- [ ] Base de datos PostgreSQL/DuckDB
-- [ ] CI/CD con GitHub Actions
-- [ ] Documentación con Sphinx
+- [ ] Base de datos PostgreSQL
 
 
 ## 📝 Comandos Útiles
 
 ```bash
-# Desarrollo
-uv run pytest tests/ -v             # Tests con verbosidad
-
 # Gestión del entorno
 uv venv --python 3.11               # Crear entorno con Python específico
 uv pip install -e .                 # Instalar en modo desarrollo
