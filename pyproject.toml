@@ -13,4 +13,5 @@ dependencies = [
     "hvplot>=0.12.2",
     "pyarrow>=23.0.1",
     "matplotlib>=3.10.8",
+    "seaborn>=0.13.2",
 ]
