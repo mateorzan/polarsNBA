@@ -1,6 +1,6 @@
 # 🏀 polarsNBA
 
-Un proyecto de análisis de datos NBA centrado en herramientas modernas de Python: **uv** para gestión de entornos y **Polars** para procesamiento de datos de alto rendimiento.
+Un proyecto de análisis de datos NBA centrado en herramientas modernas de Python: **uv** para gestión de entornos y **Polars** para procesamiento de datos de alto rendimiento, a mayores se añade un Notebook que compara el rendimiento de Pandas y Polars y se demuestra como Polars es mucho mas rapido, por lo que podria ser una mejor opcion para datasets muy grandes.
 
 ## 🎯 Objetivos
 
@@ -93,19 +93,19 @@ polarsNBA/
 │   ├── raw/                 # Datos en bruto
 │   └── processed/           # Datos procesados
 ├── notebooks/               # Jupyter notebooks para análisis
-└── scripts/
-    └── 
+└── Benchmark Polars vs Pandas/
 ```
 
 ## 📊 Características de Polars
 
-### Ventajas sobre Pandas:
+### Ventajas sobre Pandas
+
 - **Velocidad**: Hasta 10x más rápido en operaciones complejas
 - **Memoria**: Uso eficiente de memoria con lazy evaluation
 - **Sintaxis**: API expresiva y consistente
 - **Tipos**: Sistema de tipos robusto
 
-### Ejemplo de uso:
+### Ejemplo de uso
 
 ```python
 import polars as pl
@@ -127,19 +127,21 @@ df = (
 ## 🎯 Roadmap
 
 ### ✅ Completado
+
 - [x] Configuración de uv
 - [x] Estructura básica del proyecto
 
 ### 🔄 En Progreso
+
 - [ ] Implementación del ETL con Polars
 - [ ] Modelado de datos
 - [ ] Cuadro de mandos en PowerBI
 
 ### 📋 Pendiente
+
 - [ ] Integración con APIs NBA oficiales
 - [ ] Dashboard interactivo
 - [ ] Base de datos PostgreSQL
-
 
 ## 📝 Comandos Útiles
 
@@ -153,7 +155,7 @@ uv export --format requirements-txt # Exportar requirements.txt
 ## 📞 Contacto
 
 - **Autor**: Mateo Iglesias
-- **Email**: mateorzan@gmail.com
+- **Email**: <mateorzan@gmail.com>
 - **GitHub**: [@mateorzan](https://github.com/tu-usuario)
 
 ---
