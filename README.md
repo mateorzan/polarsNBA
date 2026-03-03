@@ -6,7 +6,24 @@ Un proyecto de análisis de datos NBA centrado en herramientas modernas de Pytho
 
 - Implementar **uv** como gestor de paquetes y entornos virtuales
 - Utilizar **Polars** para operaciones ETL eficientes
-- Establecer las bases para una futura base de datos
+- Establecer las bases para una futura base de datos en Power BI
+- Crear un dashboard interactivo en Power Bi
+
+## 🏗️ Estructura del Proyecto
+
+```
+polarsNBA/
+├── README.md
+├── pyproject.toml
+├── uv.lock
+├── main.py
+├── .python-version
+├── archive/
+│   ├── raw/                 # Datos en bruto
+│   └── processed/           # Datos procesados
+├── notebooks/               # Jupyter notebooks para análisis
+└── Benchmark Polars vs Pandas/
+```
 
 ## 🚀 Configuración del Entorno
 
@@ -79,22 +96,6 @@ uv sync --upgrade
 
 - **polars**: Procesamiento de datos de alto rendimiento
 - **ipykernel**: Gestor para poder ejecutar los notebooks
-
-## 🏗️ Estructura del Proyecto
-
-```
-polarsNBA/
-├── README.md
-├── pyproject.toml
-├── uv.lock
-├── main.py
-├── .python-version
-├── archive/
-│   ├── raw/                 # Datos en bruto
-│   └── processed/           # Datos procesados
-├── notebooks/               # Jupyter notebooks para análisis
-└── Benchmark Polars vs Pandas/
-```
 
 ## 📊 Características de Polars
 
